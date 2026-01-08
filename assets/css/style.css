@@ -7,8 +7,9 @@
 /* Custom Font - Akira Expanded */
 @font-face {
     font-family: 'Akira Expanded';
-    src: url('https://fonts.cdnfonts.com/s/19746/AkiraExpanded-SuperBold.woff') format('woff');
-    font-weight: 900;
+    src: url('/assets/fonts/AkiraExpanded-Regular.woff2') format('woff2'),
+        url('/assets/fonts/AkiraExpanded-Regular.otf') format('opentype');
+    font-weight: 800;
     font-style: normal;
 }
 
@@ -87,16 +88,21 @@ body {
 }
 
 @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(0, 0) scale(1);
         opacity: 0;
     }
+
     10% {
         opacity: 1;
     }
+
     90% {
         opacity: 1;
     }
+
     100% {
         transform: translate(var(--tx), var(--ty)) scale(0.5);
         opacity: 0;
@@ -376,6 +382,7 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -383,9 +390,12 @@ body {
 }
 
 @keyframes gradientShift {
-    0%, 100% {
+
+    0%,
+    100% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
@@ -397,7 +407,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: 
+    background-image:
         linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
     background-size: 40px 40px;
@@ -408,6 +418,7 @@ body {
     0% {
         transform: perspective(500px) rotateX(60deg) translateY(0);
     }
+
     100% {
         transform: perspective(500px) rotateX(60deg) translateY(40px);
     }
@@ -436,10 +447,13 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 0.5;
     }
+
     50% {
         transform: scale(1.2);
         opacity: 0.8;
@@ -464,9 +478,12 @@ body {
 }
 
 @keyframes scrollBounce {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(10px);
     }

@@ -5,7 +5,454 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Think 'n Ink - UI/UX Hackathon</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .menu-line {
+            width: 28px;
+            height: 2.5px;
+            background: #ff0000;
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        .presenter {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            text-transform: uppercase;
+        }
+
+        .title {
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #ff0000, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease 0.2s forwards, gradientShift 3s ease infinite;
+            opacity: 0;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            letter-spacing: 0.2em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            text-align: center;
+        }
+
+        .event-details {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .btn {
+            padding: 0.9rem 2.2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #ff0000;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .btn-primary:hover {
+            background: #cc0000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(255, 0, 0, 0.8);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .values-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .values-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .value-item {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        .value-separator {
+            color: #ff0000;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        .about-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .about-content {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 900px;
+        }
+
+        .guidelines-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .guidelines-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+
+        .guideline-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .guideline-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 0, 0, 0.3);
+            transform: translateX(10px);
+        }
+
+        .guideline-content {
+            flex: 1;
+        }
+
+        .guideline-label {
+            color: #ff0000;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .guideline-text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .guideline-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            margin-left: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        @keyframes gridScroll {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(40px);
+            }
+        }
+
+        .glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.15), transparent);
+            filter: blur(80px);
+            animation: pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .glow-1 {
+            top: -200px;
+            left: -200px;
+        }
+
+        .glow-2 {
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .values-container {
+                gap: 1.5rem;
+            }
+
+            .about-section,
+            .guidelines-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .guideline-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .guideline-number {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 1s ease 2s forwards;
+        }
+
+        .scroll-arrow {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, #fff);
+            margin: 0 auto;
+            animation: scrollBounce 2s infinite;
+        }
+
+        @keyframes scrollBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 0.6;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -102,43 +549,70 @@
         </div>
     </section>
 
-    <section class="advisory-section">
-        <h2 class="advisory-title">Advisory Board</h2>
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
 
-        <div class="advisory-grid">
-            <div class="advisory-card">
-                <div class="advisory-image"></div>
-                <div class="advisory-name">Vignesh I</div>
-                <div class="advisory-role">Product Designer at CRED</div>
-                <div class="advisory-socials">
-                    <a href="#" class="social-icon">in</a>
-                    <a href="#" class="social-icon">ig</a>
-                </div>
-            </div>
+        // Menu animation
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
 
-            <div class="advisory-card">
-                <div class="advisory-image"></div>
-                <div class="advisory-name">Vignesh I</div>
-                <div class="advisory-role">Product Designer at CRED</div>
-                <div class="advisory-socials">
-                    <a href="#" class="social-icon">in</a>
-                    <a href="#" class="social-icon">ig</a>
-                </div>
-            </div>
+        // Button interactions
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            btn.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
 
-            <div class="advisory-card">
-                <div class="advisory-image"></div>
-                <div class="advisory-name">Vignesh I</div>
-                <div class="advisory-role">Product Designer at CRED</div>
-                <div class="advisory-socials">
-                    <a href="#" class="social-icon">in</a>
-                    <a href="#" class="social-icon">ig</a>
-                </div>
-            </div>
-        </div>
-    </section>
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
 
-    <script src="/assets/js/script.js"></script>
+            document.querySelectorAll('.glow').forEach((glow, index) => {
+                const speed = (index + 1) * 0.5;
+                glow.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.guideline-card, .about-content').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 
 </html>
