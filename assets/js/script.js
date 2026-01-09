@@ -1,43 +1,95 @@
-// Create floating particles
-const particlesContainer = document.getElementById('particles');
-for (let i = 0; i < 40; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.top = Math.random() * 100 + '%';
-    particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
-    particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
-    particle.style.animationDelay = Math.random() * 20 + 's';
-    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-    particlesContainer.appendChild(particle);
+// Throttle function for performance
+function throttle(func, delay) {
+    let lastCall = 0;
+    return function (...args) {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            func(...args);
+        }
+    };
 }
 
-// Menu animation
+// Create floating particles with error handling
+const particlesContainer = document.getElementById('particles');
+if (particlesContainer) {
+    // Reduced from 40 to 25 for better performance
+    for (let i = 0; i < 25; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        particlesContainer.appendChild(particle);
+    }
+} else {
+    console.warn('Particles container not found');
+}
+
+// Menu animation with overlay control
 const menuIcon = document.querySelector('.menu-icon');
-menuIcon.addEventListener('click', function() {
-    this.classList.toggle('active');
-});
+const navOverlay = document.querySelector('.nav-overlay');
+const navOverlayLinks = document.querySelectorAll('.nav-overlay-link');
+const navOverlayClose = document.querySelector('.nav-overlay-close');
+const navOverlayRegister = document.querySelector('.nav-overlay-register');
 
-// Button interactions
+if (menuIcon && navOverlay) {
+    // Function to close menu
+    const closeMenu = () => {
+        menuIcon.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    // Toggle menu
+    menuIcon.addEventListener('click', function () {
+        this.classList.toggle('active');
+        navOverlay.classList.toggle('active');
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close button
+    if (navOverlayClose) {
+        navOverlayClose.addEventListener('click', closeMenu);
+    }
+
+    // Close menu when clicking on links
+    navOverlayLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    // Close menu when clicking register button
+    if (navOverlayRegister) {
+        navOverlayRegister.addEventListener('click', closeMenu);
+    }
+}
+
+// Button interactions - Add keyboard accessibility
 document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-3px) scale(1.05)';
-    });
-    btn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
+    btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.click();
+        }
     });
 });
 
-// Parallax effect on mouse move
-document.addEventListener('mousemove', (e) => {
+// Parallax effect on mouse move (throttled for performance)
+const parallaxEffect = throttle((e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 20;
     const y = (e.clientY / window.innerHeight - 0.5) * 20;
-    
+
     document.querySelectorAll('.glow').forEach((glow, index) => {
         const speed = (index + 1) * 0.5;
         glow.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
     });
-});
+}, 16); // ~60fps
+
+document.addEventListener('mousemove', parallaxEffect);
 
 // Scroll reveal animations
 const observerOptions = {
@@ -60,3 +112,45 @@ document.querySelectorAll('.guideline-card, .about-content, .advisory-card').for
     el.style.transition = 'all 0.6s ease';
     observer.observe(el);
 });
+
+// Timeline scroll animation
+const timelineSection = document.querySelector('.timeline-section');
+const timelineLine = document.getElementById('timelineLine');
+const timelineItems = document.querySelectorAll('.timeline-item');
+
+if (timelineSection && timelineLine && timelineItems.length > 0) {
+    // Animate timeline line and trigger item animations on scroll
+    const animateTimelineLine = throttle(() => {
+        const timelineRect = timelineSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Check if timeline section is in view
+        if (timelineRect.top < windowHeight && timelineRect.bottom > 0) {
+            // Calculate how much of the timeline is visible
+            const visibleHeight = Math.min(windowHeight - timelineRect.top, timelineRect.height);
+            const scrollPercentage = Math.max(0, Math.min(1, visibleHeight / timelineRect.height));
+
+            // Get the total height of all timeline items
+            const containerHeight = document.querySelector('.timeline-container').offsetHeight;
+
+            // Animate the line height based on scroll
+            const lineHeight = containerHeight * scrollPercentage;
+            timelineLine.style.height = lineHeight + 'px';
+
+            // Trigger animations for items when line reaches them
+            timelineItems.forEach((item, index) => {
+                const itemTop = item.offsetTop;
+
+                // Check if the line has reached this item (with a small offset for better timing)
+                if (lineHeight >= itemTop - 20) {
+                    item.classList.add('line-reached');
+                }
+            });
+        }
+    }, 16); // ~60fps
+
+    // Initial call and scroll listener
+    window.addEventListener('scroll', animateTimelineLine);
+    window.addEventListener('resize', animateTimelineLine); // Keep resize listener
+    animateTimelineLine(); // Initial call
+}
