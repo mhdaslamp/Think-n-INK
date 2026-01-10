@@ -882,6 +882,20 @@ h6,
     margin-top: 0;
 }
 
+.timeline-day {
+    position: absolute;
+    left: -180px;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-weight: 700;
+    color: var(--color-primary);
+    width: 140px;
+    text-align: right;
+    padding-right: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
 .timeline-time {
     position: absolute;
     left: -180px;
