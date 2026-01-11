@@ -202,14 +202,69 @@
                 }
             });
         }, {
-            threshold: 0.3,
-            rootMargin: '-100px 0px -60% 0px'
+            threshold: 0.15,
+            rootMargin: '-80px 0px -50% 0px'
         });
 
         // Observe all sections
         sections.forEach(section => {
             scrollSpyObserver.observe(section);
         });
+
+        // Also observe hero for "Home" link
+        const hero = document.querySelector('.hero');
+        if (hero) {
+            scrollSpyObserver.observe(hero);
+        }
     }
+
+    // Countdown Timer
+    const countdownTimer = () => {
+        const eventDate = new Date('2026-01-17T09:30:00').getTime();
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                // Event has started or passed
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+
+                const countdownLabel = document.querySelector('.countdown-label');
+                if (countdownLabel) {
+                    countdownLabel.textContent = 'Event is Live!';
+                }
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update DOM
+            const daysEl = document.getElementById('days');
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+        };
+
+        // Initial call
+        updateCountdown();
+
+        // Update every second
+        setInterval(updateCountdown, 1000);
+    };
+
+    // Initialize countdown timer
+    countdownTimer();
 
 })();
