@@ -11,7 +11,14 @@
         content="Join us for a 2-day UI/UX Hackathon with expert talk session on Design Systems to Prototype, followed by 20-hour immersive design challenge. 17-18 Jan 2025 at GECSKP.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <!-- Preload local woff2 fonts to prioritize text rendering -->
+    <!-- 
+    <meta property="og:image" content="assets/img/logos/Think.png">
+    <meta name="twitter:image" content="assets/img/logos/Think.png">
+      Favicon and Logo 
+    <link rel="icon" type="image/png" href="assets/img/logos/Think.png">
+    <link rel="apple-touch-icon" href="assets/img/logos/Think.png">
+    <link rel="shortcut icon" href="assets/img/logos/Think.png">
+    Preload local woff2 fonts to prioritize text rendering -->
     <link rel="preload" href="assets/fonts/AkiraExpanded-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/ClashDisplay-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <title>Think 'n Ink - UI/UX Hackathon</title>
@@ -59,13 +66,15 @@
 
     <a class="skip-link" href="#main-content">Skip to content</a>
     <nav class="nav">
-        <a href="#" class="logo">LOGO</a>
+        <a href="#" class="logo">
+            <img src="assets/img/logos/Think.png" alt="Think 'n Ink Logo" class="logo-img">
+        </a>
         <div class="desktop-nav">
             <a href="#" class="nav-link" data-section="">Home</a>
             <a href="#about" class="nav-link" data-section="about">About</a>
             <a href="#guidelines" class="nav-link" data-section="guidelines">Guidelines</a>
             <a href="#timeline" class="nav-link" data-section="timeline">Timeline</a>
-            <a href="#advisory" class="nav-link" data-section="advisory">Mentors</a>
+         <!--   <a href="#advisory" class="nav-link" data-section="advisory">Mentors</a> -->
         </div>
         <div class="menu-icon">
             <div class="menu-line"></div>
@@ -110,7 +119,7 @@
                 </svg>
             </a>
             <a href="#advisory" class="nav-overlay-link" data-number="05" data-section="advisory">
-                <span class="nav-link-text">Mentors</span>
+               <!-- <span class="nav-link-text">Mentors</span> -->
                 <svg class="nav-link-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
                     aria-hidden="true">
                     <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -134,22 +143,35 @@
             <div class="glow glow-2" aria-hidden="true" role="presentation"></div>
             <div class="particles" id="particles" aria-hidden="true" role="presentation"></div>
 
-            <div class="presenter">INVENTO'26 Pre event</div>
+            <div class="presenter" > INVENTO'26 Pre event</div>
             <div class="presenter presenter-logos">
-                <span>Organized by</span>
-                <img src="assets/img/logos/MuLearn-logo.png" alt="MuLearn" class="presenter-logo">
-                <span class="logo-separator">×</span>
-                <img src="assets/img/logos/whitespace-logo.png" alt="whitespace.ui" class="presenter-logo">
+                <div class="presenter-label"><p>Organized by</p></div>
+                <div class="presenter-logos-row">
+                    <img src="assets/img/logos/MuLearn-logo.png" alt="MuLearn" class="presenter-logo">
+                    <span class="logo-separator">×</span>
+                    <img src="assets/img/logos/whitespace-logo.png" alt="whitespace.ui" class="presenter-logo">
+                </div>
             </div>
+         <!--   <div class="presenter presenter-logos">
+                <div class="presenter-label">In collaboration with</div>
+                <div class="presenter-logos-row">
+                    <img src="assets/img/logos/FOFK-logo.png" alt="FOFK" class="presenter-logo">
+                </div>
+            </div>
+        -->
+
+            <h1 class="title">
+                <span class="title-monument">Think 'n </span>
+                <span class="title-akira">INK</span>
+            </h1>
+            <h2 class="subtitle">UI/UX Workshop And Hackathon</h2>
             <div class="presenter presenter-logos">
-                <span>In collaboration with</span>
-                <img src="assets/img/logos/FOFK-logo.png" alt="FOFK" class="presenter-logo">
+                <div class="presenter-label">In collaboration with</div>
+                <div class="presenter-logos-row">
+                    <img src="assets/img/logos/FOFK-logo.png" alt="FOFK" class="presenter-logo">
+                </div>
             </div>
-
-
-            <h1 class="title">THINK 'N INK</h1>
-            <h2 class="subtitle">UI/UX HACKATHON</h2>
-            <div class="event-details">17-18 JAN 2025 • GECSKP</div>
+          
 
             <div class="cta-buttons">
                 <button class="btn btn-primary" aria-label="Register for the hackathon">
@@ -160,14 +182,14 @@
                         </svg>
                     </span>
                 </button>
-                <button class="btn btn-secondary" aria-label="Load more information">
+               <!-- <button class="btn btn-secondary" aria-label="Load more information">
                     <span class="btn-text">Load More</span>
                     <span class="btn-icon" aria-hidden="true">
                         <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <use xlink:href="#icon-arrow"></use>
                         </svg>
                     </span>
-                </button>
+                </button> -->
             </div>
 
             <div class="scroll-indicator" aria-hidden="true" role="presentation">
@@ -254,7 +276,7 @@
             <div class="timeline-container">
                 <div class="timeline-line" id="timelineLine"></div>
 
-                <div class="timeline-day">Day 1</div>
+                <div class="timeline-day">Jan 1  <br> Day 1</div>
                 <div class="timeline-item">
                     <div class="timeline-time">9:30 AM</div>
                     <div class="timeline-content">
@@ -322,7 +344,8 @@
                 </div>
             </div>
         </section>
-
+        
+<!--
         <section class="advisory-section" id="advisory" aria-labelledby="advisory-heading">
             <h2 class="advisory-title" id="advisory-heading">Mentors</h2>
 
@@ -388,6 +411,8 @@
                 </div>
             </div>
         </section>
+-->
+           
 
     </main>
 
@@ -425,7 +450,7 @@
                     <li><a href="#about" class="footer-link">About</a></li>
                     <li><a href="#guidelines" class="footer-link">Guidelines</a></li>
                     <li><a href="#timeline" class="footer-link">Timeline</a></li>
-                    <li><a href="#advisory" class="footer-link">Mentors</a></li>
+                 <!--   <li><a href="#advisory" class="footer-link">Mentors</a></li> -->
                 </ul>
             </div>
 

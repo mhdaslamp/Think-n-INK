@@ -1,6 +1,9 @@
 /* Import Poppins Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* Import Monument Extended Font */
+@import url('https://fonts.cdnfonts.com/css/monument-extended');
+
 :root {
     /* Colors */
     --color-primary: #ff0000;
@@ -166,17 +169,22 @@ h6,
 }
 
 .logo {
-    font-size: 1.2rem;
-    font-weight: bold;
-    letter-spacing: 0.1em;
-    color: var(--color-text);
+    display: inline-block;
     text-decoration: none;
     transition: var(--transition-base);
 }
 
-.logo:hover {
-    color: var(--color-primary);
+.logo-img {
+    height:18px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: var(--transition-base);
+}
+
+.logo:hover .logo-img {
     transform: scale(1.05);
+    opacity: 0.9;
 }
 
 .menu-icon {
@@ -456,17 +464,47 @@ h6,
     text-transform: uppercase;
 }
 
+.presenter:not(.presenter-logos) {
+    font-size: clamp(1.5rem, 4.5vw, 3rem);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    line-height: 1.3;
+}
+
+.presenter h1 {
+    font-size: clamp(1.2rem, 3.5vw, 2.5rem);
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    line-height: 1.3;
+}
+
 .presenter-logos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.presenter-label {
+    font-size: 0.95rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.presenter-logos-row {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .presenter-logo {
     height: 60px;
-    width: auto;
+    width: 120px;
     object-fit: contain;
     opacity: 0.9;
     transition: all 0.3s ease;
@@ -484,19 +522,47 @@ h6,
 }
 
 .title {
-    font-family: 'Akira Expanded', sans-serif;
     font-size: clamp(3rem, 12vw, 8rem);
     font-weight: 900;
     letter-spacing: 0.05em;
     margin-bottom: 1rem;
+    animation: fadeInUp 1s ease 0.2s forwards, gradientShift 3s ease infinite;
+    opacity: 0;
+    text-align: center;
+    display: inline-block;
+}
+
+.title-monument,
+.title-akira {
     background: linear-gradient(45deg, #fff, #ff0000, #fff);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: fadeInUp 1s ease 0.2s forwards, gradientShift 3s ease infinite;
-    opacity: 0;
-    text-align: center;
+    animation: gradientShift 3s ease infinite;
+}
+
+.title-monument {
+    font-family: 'Monument Extended', sans-serif;
+}
+
+.title-logo {
+    height: 1.2em;
+    width: auto;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 0.15em;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.title-logo:hover {
+    transform: scale(1.1);
+}
+
+.title-akira {
+    font-family: 'Akira Expanded', sans-serif;
 }
 
 .subtitle {
@@ -1549,8 +1615,8 @@ h6,
         padding: 0.75rem 1rem;
     }
 
-    .logo {
-        font-size: 1rem;
+    .logo-img {
+        height: 12px;
     }
 
     .menu-icon {
@@ -1565,6 +1631,36 @@ h6,
     .presenter {
         font-size: 0.65rem;
         margin-bottom: 1rem;
+    }
+
+    .presenter:not(.presenter-logos) {
+        font-size: clamp(1rem, 4vw, 1.3rem);
+        letter-spacing: 0.15em;
+    }
+
+    .presenter h1 {
+        font-size: clamp(0.9rem, 3vw, 1.1rem);
+        letter-spacing: 0.1em;
+    }
+
+    .presenter-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        margin-bottom: 0.3rem;
+    }
+
+    .presenter-logos-row {
+        gap: 0.8rem;
+    }
+
+    .presenter-logo {
+        height: 35px;
+        width: 70px;
+    }
+
+    .logo-separator {
+        font-size: 1rem;
+        margin: 0 0.3rem;
     }
 
     .title {
@@ -1723,8 +1819,8 @@ h6,
         padding: 1.2rem 2rem;
     }
 
-    .logo {
-        font-size: 1.1rem;
+    .logo-img {
+        height: 12px;
     }
 
     .hero {
@@ -1743,6 +1839,35 @@ h6,
     .btn {
         width: 180px;
         height: 55px;
+    }
+
+    .presenter:not(.presenter-logos) {
+        font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+        letter-spacing: 0.18em;
+    }
+
+    .presenter h1 {
+        font-size: clamp(1rem, 3.5vw, 1.5rem);
+        letter-spacing: 0.12em;
+    }
+
+    .presenter-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.25em;
+    }
+
+    .presenter-logos-row {
+        gap: 1rem;
+    }
+
+    .presenter-logo {
+        height: 45px;
+        width: 90px;
+    }
+
+    .logo-separator {
+        font-size: 1.2rem;
+        margin: 0 0.4rem;
     }
 
     .values-container {
@@ -1808,6 +1933,35 @@ h6,
 
     .hero {
         padding: 2rem 1rem;
+    }
+
+    .presenter:not(.presenter-logos) {
+        font-size: clamp(1.3rem, 4.5vw, 2rem);
+        letter-spacing: 0.19em;
+    }
+
+    .presenter h1 {
+        font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+        letter-spacing: 0.13em;
+    }
+
+    .presenter-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+    }
+
+    .presenter-logos-row {
+        gap: 1rem;
+    }
+
+    .presenter-logo {
+        height: 40px;
+        width: 80px;
+    }
+
+    .logo-separator {
+        font-size: 1.1rem;
+        margin: 0 0.3rem;
     }
 
     .cta-buttons {
